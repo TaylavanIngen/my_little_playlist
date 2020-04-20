@@ -4,4 +4,27 @@ body{
 
 table{
   width:100%;
+  padding:10px;
+}
+
+.formDiv{
+
+  padding:20px;
+
+}
+
+.tableDiv{
+  height: 700px;
+}
+
+footer{
+  padding:10px;
+  font-size: 0.9rem;
+}
+
+input{
+  margin:10px;
+}
+select{
+  margin:10px;
 }

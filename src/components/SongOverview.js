@@ -8,26 +8,61 @@ class SongOverview extends React.Component {
     super()
     this.state =
     {
-      songs: [
-        {id:1,
-         name:"Psycho",
-         artist:"The Sonics",
-         genre: "Rock 'n' Roll",
-         rating:"4"
-       }
-      ]
+      songs:[]
+
     }
   }
+
+  componentDidMount() {
+ this.fetchData();
+  }
+
+  async fetchData(){
+       try {
+         const result = await fetch('https://wincacademydatabase.firebaseio.com/tayla/songs.json', {
+           method: "GET"
+         })
+         const data = await result.json();
+         console.log("Before (the raw result):", data);
+         let songs = Object.keys(data).map(key => ({
+           id: key,
+           name: data[key].name,
+           artist: data[key].artist,
+           genre: data[key].genre,
+           rating: data[key].rating
+         }));
+         console.log("After the songs array", {songs});
+
+         this.setState({songs: songs})
+
+       } catch (err) {
+         console.log(err.message);
+       }
+     }
+
+      async postData(data) {
+       try {
+
+         const resultPost = await fetch('https://wincacademydatabase.firebaseio.com/tayla/songs.json', {
+           method: 'POST',
+           body: data
+           })
+         const dataPost = await resultPost.json();
+         console.log(dataPost);
+       } catch (err) {
+         console.log(err.message)
+       }
+     }
+
 
 
   handleSubmit = (event)=> {
     event.preventDefault();
     const formData=new FormData(event.target);
-    let randomId=Math.random();
-    formData.append("id", randomId)
     console.log("I've been submitted");
     console.log(stringifyFormData(formData))
     const newSong= stringifyFormData(formData)
+    this.postData(newSong);
     this.addSong (newSong);
   }
 
@@ -45,7 +80,7 @@ class SongOverview extends React.Component {
     return (
       <div>
 	      <SongForm handleSubmit={this.handleSubmit}/>
-					<table >
+				<div className="tableDiv"	><table >
 		        <tbody><tr className="song-header">
 			        <th className="song-row__item">Song</th>
 			        <th className="song-row__item">Artist</th>
@@ -55,6 +90,7 @@ class SongOverview extends React.Component {
             <SongList songs={this.state.songs}/>
             </tbody>
 				</table>
+        </div>
 
       </div>
     );
@@ -68,5 +104,7 @@ function stringifyFormData(fd) {
   }
   return JSON.stringify(data, null, 2);
 }
+
+
 
 export default SongOverview;
