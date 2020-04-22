@@ -2,7 +2,7 @@
 
 ## Introductie
 
-🕺🎵 Ik maak een favo song-saver: een Single Page Application (SPA) waarin je al je favoriete lievelingsliedjes kunt opslaan met rating.🎵💃
+🕺🎵 Ik maak een favo song-saver: een Single Page Application (SPA) in React waarin je al je favoriete lievelingsliedjes kunt opslaan met rating.🎵💃
 
 
 
